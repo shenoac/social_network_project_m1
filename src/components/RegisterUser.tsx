@@ -1,32 +1,45 @@
-// RegisterUser.tsx
+// src/components/RegisterUser.tsx
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '../../src/app/store/userSlice';
-import { AppDispatch } from '../../src/app/store/index';
+import { AppDispatch, RootState } from '../../src/app/store/index';
+import { useRouter } from 'next/navigation';
 
 const RegisterUser: React.FC = () => {
   const [name, setName] = useState<string>('');
   const [profilePic, setProfilePic] = useState<string>('');
   const [bio, setBio] = useState<string>('');
   const [username, setUsername] = useState<string>('');
+  const [error, setError] = useState<string | null>(null);
 
   const dispatch: AppDispatch = useDispatch();
+  const users = useSelector((state: RootState) => state.user.users);
+  const router = useRouter();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    dispatch(registerUser({
-      name,
-      profilePic,
-      bio,
-      username,
-    }));
+    const existingUser = users.find(user => user.username === username);
+    if (existingUser) {
+      setError('Username already exists. Please choose a different one.');
+    } else {
+      dispatch(registerUser({
+        name,
+        profilePic,
+        bio,
+        username,
+      }));
 
-    // Reset form fields
-    setName('');
-    setProfilePic('');
-    setBio('');
-    setUsername('');
+      // Redirect to the login page after successful registration
+      router.push('/login');
+
+      // Reset form fields
+      setName('');
+      setProfilePic('');
+      setBio('');
+      setUsername('');
+      setError(null); // Clear any existing error
+    }
   };
 
   return (
@@ -62,6 +75,7 @@ const RegisterUser: React.FC = () => {
           onChange={(e) => setUsername(e.target.value)}
         />
       </div>
+      {error && <p style={{ color: 'red' }}>{error}</p>} {/* Display error message */}
       <button type="submit">Register</button>
     </form>
   );

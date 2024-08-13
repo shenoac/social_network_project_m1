@@ -3,12 +3,14 @@
 "use client"
 
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../store'; // Adjust the path to your store
 import { useRouter } from 'next/navigation'; // Use this if you're in the app directory
+import { logoutUser } from '../store/userSlice'; // Import the logout action
 
 const Profile: React.FC = () => {
   const currentUser = useSelector((state: RootState) => state.user.currentUser);
+  const dispatch = useDispatch();
   const router = useRouter();
 
   useEffect(() => {
@@ -16,6 +18,11 @@ const Profile: React.FC = () => {
       router.push('/'); // Redirect to login page if no user is logged in
     }
   }, [currentUser, router]);
+
+  const handleLogout = () => {
+    dispatch(logoutUser()); // Dispatch the logout action
+    router.push('/login'); // Redirect to the login page
+  };
 
   if (!currentUser) return null; // Prevent rendering until redirect happens
 
@@ -26,6 +33,8 @@ const Profile: React.FC = () => {
       <p>Your username is: {currentUser.username}</p>
       <img src={currentUser.profilePic} alt="Profile" />
       <p>Bio: {currentUser.bio}</p>
+
+      <button onClick={handleLogout}>Logout</button> {/* Add the Logout button here */}
     </div>
   );
 };
