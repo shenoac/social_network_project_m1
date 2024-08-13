@@ -1,11 +1,9 @@
 // src/pages/profile.tsx
-
-"use client"
-
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../store'; // Adjust the path to your store
-import { useRouter } from 'next/navigation'; // Use this if you're in the app directory
+import { RootState } from '../../src/app/store/index'; // Adjust path as needed
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 const Profile: React.FC = () => {
   const currentUser = useSelector((state: RootState) => state.user.currentUser);
@@ -21,11 +19,10 @@ const Profile: React.FC = () => {
 
   return (
     <div>
-      <h2>Welcome to your profile, {currentUser.name}!</h2>
-      <p>This is your profile page.</p>
-      <p>Your username is: {currentUser.username}</p>
+      <h2>Welcome, {currentUser.name}!</h2>
+      <p>You are logged in as: {currentUser.username}</p>
       <img src={currentUser.profilePic} alt="Profile" />
-      <p>Bio: {currentUser.bio}</p>
+      <p>{currentUser.bio}</p>
     </div>
   );
 };

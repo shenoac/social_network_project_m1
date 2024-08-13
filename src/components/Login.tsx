@@ -1,20 +1,27 @@
-"use client"
-// Login.tsx
-import React, { useState } from 'react';
+// src/pages/index.tsx
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '../../src/app/store/userSlice';
-import { RootState, AppDispatch } from '../../src/app/store/index';
+import { loginUser } from '../../src/app/store/userSlice'; // Adjust path as needed
+import { RootState, AppDispatch } from '../../src/app/store/index'; // Adjust path as needed
+import { useRouter } from 'next/navigation';
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState<string>('');
   const dispatch: AppDispatch = useDispatch();
   const currentUser = useSelector((state: RootState) => state.user.currentUser);
+  const router = useRouter();
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     dispatch(loginUser(username));
     setUsername('');
   };
+
+  useEffect(() => {
+    if (currentUser) {
+      router.push('/profile'); // Redirect to profile page if login is successful
+    }
+  }, [currentUser, router]);
 
   return (
     <div>
