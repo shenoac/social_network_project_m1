@@ -13,8 +13,30 @@ interface AuthState {
   currentUser: UserState | null;
 }
 
+// Dummy users array
+const initialUsers: UserState[] = [
+  {
+    name: 'John Doe',
+    profilePic: 'https://via.placeholder.com/150',
+    bio: 'Software Developer from NY.',
+    username: 'johndoe',
+  },
+  {
+    name: 'Jane Smith',
+    profilePic: 'https://via.placeholder.com/150',
+    bio: 'Graphic Designer from LA.',
+    username: 'janesmith',
+  },
+  {
+    name: 'Alice Johnson',
+    profilePic: 'https://via.placeholder.com/150',
+    bio: 'Product Manager from SF.',
+    username: 'alicejohnson',
+  },
+];
+
 const initialState: AuthState = {
-  users: [],
+  users: initialUsers,  // Populate the users array with the dummy users
   currentUser: null,
 };
 
