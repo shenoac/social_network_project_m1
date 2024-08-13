@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../store'; // Adjust the path to your store
 import { useRouter } from 'next/navigation'; // Use this if you're in the app directory
 import { logoutUser } from '../store/userSlice'; // Import the logout action
+import StatusUpdate from '@/components/StatusUpdate';
 
 const Profile: React.FC = () => {
   const currentUser = useSelector((state: RootState) => state.user.currentUser);
@@ -33,6 +34,10 @@ const Profile: React.FC = () => {
       <p>Your username is: {currentUser.username}</p>
       <img src={currentUser.profilePic} alt="Profile" />
       <p>Bio: {currentUser.bio}</p>
+      <h3>Your Status:</h3>
+      <p>{currentUser.status}</p>
+
+      <StatusUpdate /> {/* Add the status update form here */}
 
       <button onClick={handleLogout}>Logout</button> {/* Add the Logout button here */}
     </div>
