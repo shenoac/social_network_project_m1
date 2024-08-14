@@ -1,4 +1,4 @@
-// userSlice.ts
+// src/app/store/userSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface UserState {
@@ -13,30 +13,28 @@ interface AuthState {
   currentUser: UserState | null;
 }
 
-// Dummy users array
-const initialUsers: UserState[] = [
-  {
-    name: 'John Doe',
-    profilePic: 'https://via.placeholder.com/150',
-    bio: 'Software Developer from NY.',
-    username: 'johndoe',
-  },
-  {
-    name: 'Jane Smith',
-    profilePic: 'https://via.placeholder.com/150',
-    bio: 'Graphic Designer from LA.',
-    username: 'janesmith',
-  },
-  {
-    name: 'Alice Johnson',
-    profilePic: 'https://via.placeholder.com/150',
-    bio: 'Product Manager from SF.',
-    username: 'alicejohnson',
-  },
-];
-
+// Initial state with some dummy users
 const initialState: AuthState = {
-  users: initialUsers,  // Populate the users array with the dummy users
+  users: [
+    {
+      name: 'John Doe',
+      profilePic: 'https://via.placeholder.com/150',
+      bio: 'Software Developer from NY.',
+      username: 'johndoe',
+    },
+    {
+      name: 'Jane Smith',
+      profilePic: 'https://via.placeholder.com/150',
+      bio: 'Graphic Designer from LA.',
+      username: 'janesmith',
+    },
+    {
+      name: 'Alice Johnson',
+      profilePic: 'https://via.placeholder.com/150',
+      bio: 'Product Manager from SF.',
+      username: 'alicejohnson',
+    },
+  ],
   currentUser: null,
 };
 
@@ -45,7 +43,13 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     registerUser: (state, action: PayloadAction<UserState>) => {
-      state.users.push(action.payload);
+      const existingUser = state.users.find(user => user.username === action.payload.username);
+      if (!existingUser) {
+        state.users.push(action.payload);
+      } else {
+        console.log('User with this username already exists!');
+        // Optional: Handle this case by updating the state with an error message or notification
+      }
     },
     loginUser: (state, action: PayloadAction<string>) => {
       const user = state.users.find(user => user.username === action.payload);
