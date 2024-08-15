@@ -1,3 +1,4 @@
+"use client"
 // src/pages/profile.tsx
 import React from 'react';
 import { useSelector } from 'react-redux';

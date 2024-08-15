@@ -1,4 +1,7 @@
+<<<<<<< Updated upstream
 // src/app/store/index.ts
+=======
+>>>>>>> Stashed changes
 import { configureStore } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web

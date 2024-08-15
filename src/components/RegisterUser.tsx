@@ -1,8 +1,17 @@
+<<<<<<< Updated upstream
 // src/components/RegisterUser.tsx
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '../../src/app/store/userSlice';
 import { AppDispatch, RootState } from '../../src/app/store/index';
+=======
+"use client";
+
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { registerUser } from '@/app/store/userSlice'; 
+import { AppDispatch, RootState } from '@/app/store'; 
+>>>>>>> Stashed changes
 import { useRouter } from 'next/navigation';
 
 const RegisterUser: React.FC = () => {
@@ -28,7 +37,12 @@ const RegisterUser: React.FC = () => {
         profilePic,
         bio,
         username,
+<<<<<<< Updated upstream
         
+=======
+        status: '', // Standardstatus hinzufügen, falls erforderlich
+        friends:[]
+>>>>>>> Stashed changes
       }));
 
       // Redirect to the login page after successful registration
