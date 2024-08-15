@@ -1,8 +1,4 @@
-<<<<<<< Updated upstream
-// src/app/store/userSlice.ts
-=======
 // store/userSlice.ts
->>>>>>> Stashed changes
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface User {
@@ -10,13 +6,8 @@ interface User {
   name: string;
   profilePic: string;
   bio: string;
-<<<<<<< Updated upstream
-  username: string;
-  status?: string; // Add status field
-=======
   status: string;
   friends: string[];
->>>>>>> Stashed changes
 }
 
 interface UserState {
@@ -24,18 +15,6 @@ interface UserState {
   currentUser: User | null;
 }
 
-<<<<<<< Updated upstream
-const initialState: AuthState = {
-  users: [
-    {
-      name: 'John Doe',
-      profilePic: 'https://via.placeholder.com/150',
-      bio: 'Software Developer from NY.',
-      username: 'johndoe',
-      status: '', // Initialize with an empty status
-    },
-    // Add other users here
-=======
 const initialState: UserState = {
   users: [
     // Beispielbenutzer
@@ -55,7 +34,6 @@ const initialState: UserState = {
       status: 'Offline',
       friends: ['johndoe'],
     },
->>>>>>> Stashed changes
   ],
   currentUser: null,
 };
@@ -64,19 +42,7 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-<<<<<<< Updated upstream
-    registerUser: (state, action: PayloadAction<UserState>) => {
-      const existingUser = state.users.find(user => user.username === action.payload.username);
-      if (!existingUser) {
-        state.users.push(action.payload);
-      } else {
-        console.log('User with this username already exists!');
-      }
-    },
-    loginUser: (state, action: PayloadAction<string>) => {
-=======
     setCurrentUser(state, action: PayloadAction<string>) {
->>>>>>> Stashed changes
       const user = state.users.find(user => user.username === action.payload);
       state.currentUser = user || null;
     },
@@ -140,21 +106,8 @@ const userSlice = createSlice({
         }
       }
     },
-    updateUserStatus: (state, action: PayloadAction<{ username: string, status: string }>) => {
-      const user = state.users.find(user => user.username === action.payload.username);
-      if (user) {
-        user.status = action.payload.status;
-        if (state.currentUser?.username === action.payload.username) {
-          state.currentUser.status = action.payload.status;
-        }
-      }
-    },
-  },
-});
 
-<<<<<<< Updated upstream
-export const { registerUser, loginUser, logoutUser, updateUserStatus } = userSlice.actions;
-=======
+}});
+
 export const { setCurrentUser, logoutUser, addFriend, removeFriend, registerUser, loginUser, updateUserStatus } = userSlice.actions;
->>>>>>> Stashed changes
 export default userSlice.reducer;
