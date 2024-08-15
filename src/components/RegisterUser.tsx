@@ -28,6 +28,7 @@ const RegisterUser: React.FC = () => {
         profilePic,
         bio,
         username,
+        
       }));
 
       // Redirect to the login page after successful registration

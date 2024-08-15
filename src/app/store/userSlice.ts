@@ -6,6 +6,7 @@ interface UserState {
   profilePic: string;
   bio: string;
   username: string;
+  status?: string; // Add status field
 }
 
 interface AuthState {
@@ -13,7 +14,6 @@ interface AuthState {
   currentUser: UserState | null;
 }
 
-// Initial state with some dummy users
 const initialState: AuthState = {
   users: [
     {
@@ -21,19 +21,9 @@ const initialState: AuthState = {
       profilePic: 'https://via.placeholder.com/150',
       bio: 'Software Developer from NY.',
       username: 'johndoe',
+      status: '', // Initialize with an empty status
     },
-    {
-      name: 'Jane Smith',
-      profilePic: 'https://via.placeholder.com/150',
-      bio: 'Graphic Designer from LA.',
-      username: 'janesmith',
-    },
-    {
-      name: 'Alice Johnson',
-      profilePic: 'https://via.placeholder.com/150',
-      bio: 'Product Manager from SF.',
-      username: 'alicejohnson',
-    },
+    // Add other users here
   ],
   currentUser: null,
 };
@@ -48,7 +38,6 @@ const userSlice = createSlice({
         state.users.push(action.payload);
       } else {
         console.log('User with this username already exists!');
-        // Optional: Handle this case by updating the state with an error message or notification
       }
     },
     loginUser: (state, action: PayloadAction<string>) => {
@@ -62,8 +51,17 @@ const userSlice = createSlice({
     logoutUser: (state) => {
       state.currentUser = null;
     },
+    updateUserStatus: (state, action: PayloadAction<{ username: string, status: string }>) => {
+      const user = state.users.find(user => user.username === action.payload.username);
+      if (user) {
+        user.status = action.payload.status;
+        if (state.currentUser?.username === action.payload.username) {
+          state.currentUser.status = action.payload.status;
+        }
+      }
+    },
   },
 });
 
-export const { registerUser, loginUser, logoutUser } = userSlice.actions;
+export const { registerUser, loginUser, logoutUser, updateUserStatus } = userSlice.actions;
 export default userSlice.reducer;
