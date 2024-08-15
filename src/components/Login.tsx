@@ -1,52 +1,50 @@
-// src/pages/index.tsx
+"use client";
+
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '../../src/app/store/userSlice'; // Adjust path as needed
-import { RootState, AppDispatch } from '../../src/app/store/index'; // Adjust path as needed
+import { loginUser } from '../../src/app/store/userSlice'; // Pfad anpassen
+import { RootState, AppDispatch } from '../../src/app/store/index'; // Pfad anpassen
 import { useRouter } from 'next/navigation';
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState<string>('');
   const dispatch: AppDispatch = useDispatch();
-  const currentUser = useSelector((state: RootState) => state.user.currentUser);
   const router = useRouter();
-
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    dispatch(loginUser(username));
-    setUsername('');
-  };
+  const users = useSelector((state: RootState) => state.user.users);
+  const currentUser = useSelector((state: RootState) => state.user.currentUser);
 
   useEffect(() => {
     if (currentUser) {
-      router.push('/profile'); // Redirect to profile page if login is successful
+      router.push('/profile'); // Weiterleitung zur Profilseite, wenn bereits eingeloggt
     }
   }, [currentUser, router]);
 
-  return (
-    <div>
-      <form onSubmit={handleLogin}>
-        <div>
-          <label>Username:</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </div>
-        <button type="submit">Login</button>
-      </form>
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
 
-      {currentUser ? (
-        <div>
-          <h3>Welcome, {currentUser.name}!</h3>
-          <img src={currentUser.profilePic} alt="Profile" />
-          <p>{currentUser.bio}</p>
-        </div>
-      ) : (
-        <p>No user logged in</p>
-      )}
-    </div>
+    const user = users.find(user => user.username === username);
+    if (user) {
+      dispatch(loginUser(user));
+      router.push('/profile'); // Weiterleitung zur Profilseite nach erfolgreichem Login
+    } else {
+      alert('Invalid username');
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label htmlFor="username">Username:</label>
+        <input
+          type="text"
+          id="username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+        />
+      </div>
+      <button type="submit">Login</button>
+    </form>
   );
 };
 
