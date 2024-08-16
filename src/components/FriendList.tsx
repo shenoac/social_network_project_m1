@@ -38,16 +38,16 @@ const FriendList: React.FC = () => {
   console.log('Friends list:', friends); // Debugging
 
   return (
-    <div>
+    <div className='container'>
       <h3>Your Friends</h3>
-      <ul>
+      <ul className='list-unstyled'>
         {friends.length > 0 ? (
           friends.map((friend) => (
-            <li key={friend}>
+            <li key={friend} className='mb-3'>
               <Link href={`/profile/${friend}`}>
                 {friend}
               </Link>
-              <button onClick={() => handleRemoveFriend(friend)}>Remove</button>
+              <button className='btn btn-danger btn-sm ms-2' onClick={() => handleRemoveFriend(friend)}>Remove</button>
             </li>
           ))
         ) : (

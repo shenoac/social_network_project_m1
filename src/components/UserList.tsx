@@ -21,17 +21,21 @@ const UserList: React.FC = () => {
     };
   
     return (
-      <div>
+      <div className='container mt-4'>
         <h3>Available Users</h3>
-        <ul>
+        <ul className='list-unstyled'>
           {users
             .filter(user => user.username !== currentUser?.username) // Exclude current user from list
             .map(user => (
-              <li key={user.username}>
+              <li key={user.username} className='mb-3'>
                 <Link href={`/profile/${user.username}`}>
                   {user.name}
                 </Link>
-                <button onClick={() => handleAddFriend(user.username)}>Add Friend</button>
+                <button
+                className='btn btn-primary btn-sm ms-2'
+                 onClick={() => handleAddFriend(user.username)}>Add Friend</button>              
+
+                 
               </li>
             ))}
         </ul>
