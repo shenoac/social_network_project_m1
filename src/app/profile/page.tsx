@@ -7,8 +7,9 @@ import { RootState } from '../store';
 import { useRouter } from 'next/navigation';
 import { logoutUser } from '../store/userSlice';
 import FriendList from '@/components/FriendList';
-import UserList from '@/components/UserList'; // Importiere die UserList-Komponente
+import UserList from '@/components/UserList'; 
 import StatusUpdate from '@/components/StatusUpdate';
+import Feed from '@/components/Feed';
 
 const ProfilePage: React.FC = () => {
   const dispatch = useDispatch();
@@ -40,7 +41,7 @@ const ProfilePage: React.FC = () => {
       <StatusUpdate />
       <FriendList />
       <UserList /> {/* Zeige alle verfügbaren Benutzer an */}
-
+      <Feed />
       <button onClick={handleLogout}>Logout</button>
     </div>
   );

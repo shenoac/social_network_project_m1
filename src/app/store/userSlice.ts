@@ -1,7 +1,9 @@
 // store/userSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { v4 as uuidv4 } from 'uuid'; 
 
 interface User {
+  id: string;
   username: string;
   name: string;
   profilePic: string;
@@ -16,25 +18,7 @@ interface UserState {
 }
 
 const initialState: UserState = {
-  users: [
-    // Beispielbenutzer
-    {
-      username: 'johndoe',
-      name: 'John Doe',
-      profilePic: '/path/to/profilePic.jpg',
-      bio: 'Developer at XYZ',
-      status: 'Online',
-      friends: ['janedoe'],
-    },
-    {
-      username: 'janedoe',
-      name: 'Jane Doe',
-      profilePic: '/path/to/profilePic2.jpg',
-      bio: 'Designer at XYZ',
-      status: 'Offline',
-      friends: ['johndoe'],
-    },
-  ],
+  users: [],
   currentUser: null,
 };
 
@@ -84,12 +68,11 @@ const userSlice = createSlice({
         }
       }
     },
-    registerUser(state, action: PayloadAction<User>) {
-      const existingUser = state.users.find(user => user.username === action.payload.username);
-      if (!existingUser) {
-        state.users.push(action.payload);
-      }
+    registerUser: (state, action: PayloadAction<Omit<User, 'id'>>) => {
+      const newUser = { ...action.payload, id: uuidv4() }; // Generate unique ID
+      state.users.push(newUser);
     },
+    
     loginUser(state, action: PayloadAction<User>) {
       const user = state.users.find(user => user.username === action.payload.username);
       if (user) {
