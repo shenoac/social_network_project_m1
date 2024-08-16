@@ -31,7 +31,7 @@ const ProfilePage: React.FC = () => {
 
   return (
     <div>
-      <h1>Profile Page</h1>
+      <h3 className="text-primary">Profile Page</h3>
       <div>
         <img src={currentUser.profilePic} alt={`${currentUser.name}'s profile picture`} />
         <h2>{currentUser.name}</h2>

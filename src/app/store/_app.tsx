@@ -4,6 +4,8 @@ import { AppProps } from 'next/app';
 import { Provider } from 'react-redux';
 import store from '../../app/store/index';
 import RootLayout from '../../app/layout';  
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 
 
