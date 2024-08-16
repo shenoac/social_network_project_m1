@@ -1,8 +1,9 @@
-// src/components/RegisterUser.tsx
+"use client";
+
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { registerUser } from '../../src/app/store/userSlice';
-import { AppDispatch, RootState } from '../../src/app/store/index';
+import { registerUser } from '@/app/store/userSlice'; 
+import { AppDispatch, RootState } from '@/app/store'; 
 import { useRouter } from 'next/navigation';
 
 const RegisterUser: React.FC = () => {
@@ -28,6 +29,8 @@ const RegisterUser: React.FC = () => {
         profilePic,
         bio,
         username,
+        status: '', // Standardstatus hinzufügen, falls erforderlich
+        friends:[]
       }));
 
       // Redirect to the login page after successful registration
