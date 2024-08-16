@@ -43,7 +43,17 @@ const Login: React.FC = () => {
           required
         />
       </div>
-      <button type="submit">Login</button>
+      <button type="submit"
+      className="btn btn-sm"
+      style={{
+        border: '1px solid #ced4da', // Lighter border color
+        borderRadius: '0.5rem', // Rounded border
+        padding: '0.25rem 0.5rem', // Smaller padding
+        backgroundColor: '#adb5bd', // Lighter grey background color
+        color: '#fff', // White text color
+        cursor: 'pointer',
+        fontSize: '0.875rem' // Smaller font size
+      }}>Login</button>
     </form>
   );
 };

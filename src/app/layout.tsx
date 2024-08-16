@@ -6,7 +6,7 @@ import store from './store';
 import StateViewer from '@/components/StateViewer';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // Import Bootstrap JavaScript bundle
-import '@/app/globals.css';  // Adjust the path as necessary
+import '@/app/layout';  // Adjust the path as necessary
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

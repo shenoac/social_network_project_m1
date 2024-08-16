@@ -1,4 +1,3 @@
-// store/userSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid'; 
 
@@ -34,35 +33,20 @@ const userSlice = createSlice({
       state.currentUser = null;
     },
     addFriend(state, action: PayloadAction<{ username: string; friend: string }>) {
-      console.log(action)
-      console.log(state.users)
       const user = state.users.find(user => user.name === action.payload.username);
-      console.log(user)
-      if (user) {
-        if (!user.friends) {
-          console.log("Hello")
-          user.friends = [];
-        } console.log("TEST")
-        if (!user.friends.includes(action.payload.friend)) {
-          user.friends.push(action.payload.friend);
-          console.log(user.friends)
-          const friendUser = state.users.find(user => user.username === action.payload.friend);
-          if (friendUser) {
-            if (!friendUser.friends) {
-              friendUser.friends = [];
-            }
-            if (!friendUser.friends.includes(action.payload.username)) {
-              friendUser.friends.push(action.payload.username);
-            }
-          }
+      if (user && !user.friends.includes(action.payload.friend)) {
+        user.friends.push(action.payload.friend);
+        const friendUser = state.users.find(user => user.username === action.payload.friend);
+        if (friendUser && !friendUser.friends.includes(action.payload.username)) {
+          friendUser.friends.push(action.payload.username);
         }
       }
     },
     removeFriend(state, action: PayloadAction<{ username: string; friend: string }>) {
       const user = state.users.find(user => user.username === action.payload.username);
+      const friendUser = state.users.find(user => user.username === action.payload.friend);
       if (user) {
         user.friends = user.friends.filter(friend => friend !== action.payload.friend);
-        const friendUser = state.users.find(user => user.username === action.payload.friend);
         if (friendUser) {
           friendUser.friends = friendUser.friends.filter(friend => friend !== action.payload.username);
         }
@@ -72,7 +56,6 @@ const userSlice = createSlice({
       const newUser = { ...action.payload, id: uuidv4() }; // Generate unique ID
       state.users.push(newUser);
     },
-    
     loginUser(state, action: PayloadAction<User>) {
       const user = state.users.find(user => user.username === action.payload.username);
       if (user) {
@@ -89,8 +72,18 @@ const userSlice = createSlice({
         }
       }
     },
+    updateUserProfilePic(state, action: PayloadAction<{ username: string; profilePic: string }>) {
+      const { username, profilePic } = action.payload;
+      const user = state.users.find(user => user.username === username);
+      if (user) {
+        user.profilePic = profilePic;
+        if (state.currentUser?.username === username) {
+          state.currentUser.profilePic = profilePic;
+        }
+      }
+    }
+  }
+});
 
-}});
-
-export const { setCurrentUser, logoutUser, addFriend, removeFriend, registerUser, loginUser, updateUserStatus } = userSlice.actions;
+export const { setCurrentUser, logoutUser, addFriend, removeFriend, registerUser, loginUser, updateUserStatus, updateUserProfilePic } = userSlice.actions;
 export default userSlice.reducer;

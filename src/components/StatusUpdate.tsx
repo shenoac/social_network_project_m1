@@ -28,7 +28,16 @@ const StatusUpdate: React.FC = () => {
         onChange={(e) => setStatus(e.target.value)}
         placeholder="What's on your mind?"
       />
-      <button onClick={handleUpdateStatus}>Update Status</button>
+      <button onClick={handleUpdateStatus}className="btn btn-sm"
+  style={{
+    border: '1px solid #ced4da', // Lighter border color
+    borderRadius: '0.5rem', // Rounded border
+    padding: '0.25rem 0.5rem', // Smaller padding
+    backgroundColor: '#adb5bd', // Lighter grey background color
+    color: '#fff', // White text color
+    cursor: 'pointer',
+    fontSize: '0.875rem' // Smaller font size
+  }}>Update Status</button>
     </div>
   );
 };
